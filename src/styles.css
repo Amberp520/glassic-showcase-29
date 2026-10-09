@@ -1010,9 +1010,12 @@ textarea.form-field {
     margin-top: 26px;
   }
   .hero-bottom {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 36px;
   }
+  .hero-actions > a { padding-left: 20px; padding-right: 20px; }
+  .hero-foot { gap: 18px; }
+  .hero-foot > span { min-width: 0; }
   .hero-description {
     font-size: 13px;
   }
@@ -1122,7 +1125,7 @@ textarea.form-field {
     font-size: 40px;
   }
   .content-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 35px;
   }
   .process {
