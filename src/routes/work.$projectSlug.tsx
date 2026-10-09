@@ -1,11 +1,256 @@
-import { useState } from 'react'
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { ArrowUpRight, ArrowLeft, ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { projects, owner, pageHead, type Project } from '@/data/projects'
-import { ProjectVisual, PhoneScreen } from '@/components/portfolio/visuals'
-import { NotFoundPage } from '@/components/portfolio/shared'
-export const Route = createFileRoute('/work/$projectSlug')({loader:({params})=>{const project=projects.find(p=>p.slug===params.projectSlug);if(!project)throw notFound();return {project}},component:ProjectStory,notFoundComponent:NotFoundPage,head:({loaderData,params})=>loaderData?pageHead(`${loaderData.project.title} — ${owner.name}`,loaderData.project.caseStudySummary,`/work/${params.projectSlug}`):{meta:[{title:'Project not found — amberdesigns'},{name:'robots',content:'noindex'}]}})
-function StorySection({number,title,children}:{number:string;title:string;children:React.ReactNode}){return <section className="story-section"><div><span className="eyebrow text-primary block mb-3">{number}</span><h2>{title}</h2></div><div>{children}</div></section>}
-function Prototype({project}:{project:Project}){const [step,setStep]=useState(0);return <div className="prototype"><PhoneScreen project={project} step={step}/><div><span className="eyebrow text-muted-foreground">{step+1} / {project.screens.length} · INTERACTION EXPLORATION</span><h3 className="text-2xl mt-4 mb-3" aria-live="polite">{project.screens[step]}</h3><p>Explore the key moments in this illustrative concept flow. Each step keeps one clear action in focus.</p><div className="prototype-controls"><Button variant="glass" size="icon" aria-label="Previous prototype screen" disabled={step===0} onClick={()=>setStep(s=>s-1)}><ArrowLeft/></Button><Button variant="portfolio" onClick={()=>setStep(s=>(s+1)%project.screens.length)}>{step===project.screens.length-1?'Start again':'Next screen'}<ArrowRight/></Button></div></div></div>}
-function ProjectStory(){const {project:p}=Route.useLoaderData();const index=projects.findIndex(project=>project.slug===p.slug);const next=projects[(index+1)%projects.length];return <main className="page-enter"><div className="container page-head"><Link to="/work" className="text-link mb-8"><ArrowLeft size={14}/>Back to work</Link><div className="flex justify-between gap-4 items-center"><span className="eyebrow text-muted-foreground">{p.category}</span><span className="status glass">SELF-INITIATED CONCEPT</span></div><h1>{p.title}<span className="text-primary">.</span></h1><p>{p.overview}</p></div><div className="container"><div className="project-hero-media"><ProjectVisual project={p} priority/></div><dl className="metadata glass">{[['Role',p.role],['Timeline',p.timeline],['Tools',p.tools.join(', ')],['Discipline',p.discipline.join(', ')],['Platform',p.platform]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><StorySection number="01 / THE CONTEXT" title="Overview"><p>{p.overview}</p><div className="insight text-sm leading-7">A self-initiated design concept. The visuals and flows illustrate a design direction; research findings, launch results and client outcomes have not been verified.</div></StorySection><StorySection number="02 / THE CHALLENGE" title="Problem & goal"><h3 className="text-xl mb-4">The problem</h3><p>{p.problem}</p><h3 className="text-xl mt-7 mb-4">The goal</h3><p>{p.goal}</p></StorySection><StorySection number="03 / DISCOVERY" title="Research & user insights"><p>The discovery direction starts with mapping the existing journey, comparing relevant experiences and identifying the uncertainties at each step. The points below are design hypotheses to investigate with users—not findings from completed interviews.</p>{p.insights.map((insight,i)=><div className="insight" key={insight}><span className="eyebrow text-primary">HYPOTHESIS 0{i+1}</span><p className="mt-2 mb-0">{insight}</p></div>)}</StorySection><StorySection number="04 / MAKING SENSE OF IT" title="Design process & architecture"><p>Start with the important moments, then connect them into an understandable journey. Each exploration focuses on a different source of friction.</p><ol className="space-y-4 mb-8">{p.process.map((item,i)=><li className="flex gap-5 items-start" key={item}><span className="text-primary text-xs pt-1">0{i+1}</span><span className="text-muted-foreground leading-7">{item}</span></li>)}</ol><h3 className="text-xl mb-4">The core journey</h3><div className="flow">{p.flow.map((node,i)=><div className="flex items-center gap-3" key={node}><span className="flow-node">{node}</span>{i<p.flow.length-1&&<ArrowRight size={14} className="text-muted-foreground"/>}</div>)}</div></StorySection><StorySection number="05 / STRUCTURE BEFORE STYLE" title="Wireframes & exploration"><p>Low-fidelity structure separates the questions of hierarchy and navigation from the visual treatment. These schematic studies explore discovery, choice and confirmation.</p><div className="wireframes">{['Discover','Choose','Confirm'].map((label,i)=><div className="wireframe" key={label}><span className="text-[10px] text-muted-foreground">0{i+1} / {label}</span><div className="wire-line"/><div className="wire-block"/><div className="wire-line"/><div className="wire-line"/><div className="wire-line"/></div>)}</div><p>The visual direction builds on this hierarchy with a consistent type scale, intentional spacing and a small set of reusable interface patterns.</p></StorySection></div><section className="section bg-muted"><div className="container"><span className="eyebrow text-muted-foreground">06 / THE VISUAL DIRECTION</span><h2 className="text-4xl my-5">From structure to experience.</h2><div className="project-hero-media"><ProjectVisual project={p}/></div><div className="flex flex-wrap gap-3 mt-6">{p.screens.map((screen,i)=><span className="glass px-4 py-2 rounded-md text-xs" key={screen}>0{i+1} · {screen}</span>)}</div></div></section><div className="container"><StorySection number="07 / THE DETAILS" title="Key screens & decisions">{p.decisions.map((decision,i)=><div className="border-b border-border py-5" key={decision}><span className="eyebrow text-primary">DECISION 0{i+1}</span><p className="mt-3 mb-0">{decision}</p></div>)}</StorySection><StorySection number="08 / TRY THE JOURNEY" title="Prototype exploration"><Prototype project={p}/></StorySection><StorySection number="09 / REFLECTING ON THE WORK" title="Outcome & next steps"><p>{p.outcome}</p><div className="insight"><h3 className="text-xl mb-3">What I learned</h3><p>{p.learnings}</p></div></StorySection>{next&&<section className="section"><span className="eyebrow text-muted-foreground">KEEP EXPLORING</span><Link to="/work/$projectSlug" params={{projectSlug:next.slug}} className="flex justify-between items-center gap-5 mt-5 group"><div><h2 className="text-4xl mb-3">{next.title}</h2><p className="text-muted-foreground text-sm">{next.description}</p></div><ArrowUpRight size={40} className="text-primary shrink-0"/></Link></section>}</div></main>}
+import { useState } from "react";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { projects, owner, pageHead, type Project } from "@/data/projects";
+import { ProjectVisual, PhoneScreen } from "@/components/portfolio/visuals";
+import { NotFoundPage } from "@/components/portfolio/shared";
+export const Route = createFileRoute("/work/$projectSlug")({
+  loader: ({ params }) => {
+    const project = projects.find((p) => p.slug === params.projectSlug);
+    if (!project) throw notFound();
+    return { project };
+  },
+  component: ProjectStory,
+  notFoundComponent: NotFoundPage,
+  head: ({ loaderData, params }) =>
+    loaderData
+      ? pageHead(
+          `${loaderData.project.title} — ${owner.name}`,
+          loaderData.project.caseStudySummary,
+          `/work/${params.projectSlug}`,
+        )
+      : {
+          meta: [
+            { title: "Project not found — amberdesigns" },
+            { name: "robots", content: "noindex" },
+          ],
+        },
+});
+function StorySection({
+  number,
+  title,
+  children,
+}: {
+  number: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="story-section">
+      <div>
+        <span className="eyebrow text-primary block mb-3">{number}</span>
+        <h2>{title}</h2>
+      </div>
+      <div>{children}</div>
+    </section>
+  );
+}
+function Prototype({ project }: { project: Project }) {
+  const [step, setStep] = useState(0);
+  return (
+    <div className="prototype">
+      <PhoneScreen project={project} step={step} />
+      <div>
+        <span className="eyebrow text-muted-foreground">
+          {step + 1} / {project.screens.length} · INTERACTION EXPLORATION
+        </span>
+        <h3 className="text-2xl mt-4 mb-3" aria-live="polite">
+          {project.screens[step]}
+        </h3>
+        <p>
+          Explore the key moments in this illustrative concept flow. Each step keeps one clear
+          action in focus.
+        </p>
+        <div className="prototype-controls">
+          <Button
+            variant="glass"
+            size="icon"
+            aria-label="Previous prototype screen"
+            disabled={step === 0}
+            onClick={() => setStep((s) => s - 1)}
+          >
+            <ArrowLeft />
+          </Button>
+          <Button
+            variant="portfolio"
+            onClick={() => setStep((s) => (s + 1) % project.screens.length)}
+          >
+            {step === project.screens.length - 1 ? "Start again" : "Next screen"}
+            <ArrowRight />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+function ProjectStory() {
+  const { project: p } = Route.useLoaderData();
+  const index = projects.findIndex((project) => project.slug === p.slug);
+  const next = projects[(index + 1) % projects.length];
+  return (
+    <main className="page-enter">
+      <div className="container page-head">
+        <Link to="/work" className="text-link mb-8">
+          <ArrowLeft size={14} />
+          Back to work
+        </Link>
+        <div className="flex justify-between gap-4 items-center">
+          <span className="eyebrow text-muted-foreground">{p.category}</span>
+          <span className="status glass">SELF-INITIATED CONCEPT</span>
+        </div>
+        <h1>
+          {p.title}
+          <span className="text-primary">.</span>
+        </h1>
+        <p>{p.overview}</p>
+      </div>
+      <div className="container">
+        <div className="project-hero-media">
+          <ProjectVisual project={p} priority />
+        </div>
+        <dl className="metadata glass">
+          {[
+            ["Role", p.role],
+            ["Timeline", p.timeline],
+            ["Tools", p.tools.join(", ")],
+            ["Discipline", p.discipline.join(", ")],
+            ["Platform", p.platform],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <StorySection number="01 / THE CONTEXT" title="Overview">
+          <p>{p.overview}</p>
+          <div className="insight text-sm leading-7">
+            A self-initiated design concept. The visuals and flows illustrate a design direction;
+            research findings, launch results and client outcomes have not been verified.
+          </div>
+        </StorySection>
+        <StorySection number="02 / THE CHALLENGE" title="Problem & goal">
+          <h3 className="text-xl mb-4">The problem</h3>
+          <p>{p.problem}</p>
+          <h3 className="text-xl mt-7 mb-4">The goal</h3>
+          <p>{p.goal}</p>
+        </StorySection>
+        <StorySection number="03 / DISCOVERY" title="Research & user insights">
+          <p>
+            The discovery direction starts with mapping the existing journey, comparing relevant
+            experiences and identifying the uncertainties at each step. The points below are design
+            hypotheses to investigate with users—not findings from completed interviews.
+          </p>
+          {p.insights.map((insight, i) => (
+            <div className="insight" key={insight}>
+              <span className="eyebrow text-primary">HYPOTHESIS 0{i + 1}</span>
+              <p className="mt-2 mb-0">{insight}</p>
+            </div>
+          ))}
+        </StorySection>
+        <StorySection number="04 / MAKING SENSE OF IT" title="Design process & architecture">
+          <p>
+            Start with the important moments, then connect them into an understandable journey. Each
+            exploration focuses on a different source of friction.
+          </p>
+          <ol className="space-y-4 mb-8">
+            {p.process.map((item, i) => (
+              <li className="flex gap-5 items-start" key={item}>
+                <span className="text-primary text-xs pt-1">0{i + 1}</span>
+                <span className="text-muted-foreground leading-7">{item}</span>
+              </li>
+            ))}
+          </ol>
+          <h3 className="text-xl mb-4">The core journey</h3>
+          <div className="flow">
+            {p.flow.map((node, i) => (
+              <div className="flex items-center gap-3" key={node}>
+                <span className="flow-node">{node}</span>
+                {i < p.flow.length - 1 && (
+                  <ArrowRight size={14} className="text-muted-foreground" />
+                )}
+              </div>
+            ))}
+          </div>
+        </StorySection>
+        <StorySection number="05 / STRUCTURE BEFORE STYLE" title="Wireframes & exploration">
+          <p>
+            Low-fidelity structure separates the questions of hierarchy and navigation from the
+            visual treatment. These schematic studies explore discovery, choice and confirmation.
+          </p>
+          <div className="wireframes">
+            {["Discover", "Choose", "Confirm"].map((label, i) => (
+              <div className="wireframe" key={label}>
+                <span className="text-[10px] text-muted-foreground">
+                  0{i + 1} / {label}
+                </span>
+                <div className="wire-line" />
+                <div className="wire-block" />
+                <div className="wire-line" />
+                <div className="wire-line" />
+                <div className="wire-line" />
+              </div>
+            ))}
+          </div>
+          <p>
+            The visual direction builds on this hierarchy with a consistent type scale, intentional
+            spacing and a small set of reusable interface patterns.
+          </p>
+        </StorySection>
+      </div>
+      <section className="section bg-muted">
+        <div className="container">
+          <span className="eyebrow text-muted-foreground">06 / THE VISUAL DIRECTION</span>
+          <h2 className="text-4xl my-5">From structure to experience.</h2>
+          <div className="project-hero-media">
+            <ProjectVisual project={p} />
+          </div>
+          <div className="flex flex-wrap gap-3 mt-6">
+            {p.screens.map((screen, i) => (
+              <span className="glass px-4 py-2 rounded-md text-xs" key={screen}>
+                0{i + 1} · {screen}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+      <div className="container">
+        <StorySection number="07 / THE DETAILS" title="Key screens & decisions">
+          {p.decisions.map((decision, i) => (
+            <div className="border-b border-border py-5" key={decision}>
+              <span className="eyebrow text-primary">DECISION 0{i + 1}</span>
+              <p className="mt-3 mb-0">{decision}</p>
+            </div>
+          ))}
+        </StorySection>
+        <StorySection number="08 / TRY THE JOURNEY" title="Prototype exploration">
+          <Prototype project={p} />
+        </StorySection>
+        <StorySection number="09 / REFLECTING ON THE WORK" title="Outcome & next steps">
+          <p>{p.outcome}</p>
+          <div className="insight">
+            <h3 className="text-xl mb-3">What I learned</h3>
+            <p>{p.learnings}</p>
+          </div>
+        </StorySection>
+        {next && (
+          <section className="section">
+            <span className="eyebrow text-muted-foreground">KEEP EXPLORING</span>
+            <Link
+              to="/work/$projectSlug"
+              params={{ projectSlug: next.slug }}
+              className="flex justify-between items-center gap-5 mt-5 group"
+            >
+              <div>
+                <h2 className="text-4xl mb-3">{next.title}</h2>
+                <p className="text-muted-foreground text-sm">{next.description}</p>
+              </div>
+              <ArrowUpRight size={40} className="text-primary shrink-0" />
+            </Link>
+          </section>
+        )}
+      </div>
+    </main>
+  );
+}

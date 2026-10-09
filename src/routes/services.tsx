@@ -1,7 +1,93 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { Layers, Route as RouteIcon, PenTool, Component, Palette, Monitor } from 'lucide-react'
-import { owner, pageHead } from '@/data/projects'
-import { PageIntro, ContactCTA } from '@/components/portfolio/shared'
-export const Route = createFileRoute('/services')({component:Services,head:()=>pageHead(`Services — ${owner.name}`,'Product design, UX, UI, design systems, branding and website design support.','/services')})
-const services=[{title:'Product Design',description:'Turning product ideas into clear, usable experiences.',items:['Product discovery & direction','End-to-end user journeys','Interactive product prototypes'],icon:Layers},{title:'UX Design',description:'Understanding people and giving complexity a clear structure.',items:['Research planning','User flows & information architecture','Wireframes & usability exploration'],icon:RouteIcon},{title:'UI Design',description:'High-quality interfaces with thoughtful visual hierarchy.',items:['Mobile & web interfaces','Responsive layouts','Interaction states & handoff'],icon:PenTool},{title:'Design Systems',description:'Reusable components, patterns and visual consistency.',items:['Visual foundations & tokens','Component libraries','Guidelines & documentation'],icon:Component},{title:'Branding & Visual Design',description:'An identity with a point of view, built to work across touchpoints.',items:['Identity & visual direction','Typography & color systems','Digital graphics & campaign applications'],icon:Palette},{title:'Website Design',description:'Modern responsive websites for products, businesses and personal brands.',items:['Content structure','High-fidelity web design','Responsive prototypes'],icon:Monitor}]
-function Services(){return <main className="page-enter"><PageIntro eyebrow="WHAT WE CAN CREATE TOGETHER" title="Design support from idea to interface.">Whether you're shaping a new product or refining an existing experience, I bring clear thinking and considered design to the work.</PageIntro><section className="container pb-12">{services.map(({title,description,items,icon:Icon})=><article className="service-row" key={title}><Icon className="text-primary" size={27} strokeWidth={1.5}/><div><h2>{title}</h2><p>{description}</p></div><ul>{items.map(i=><li key={i}>{i}</li>)}</ul></article>)}</section><ContactCTA/></main>}
+import { createFileRoute } from "@tanstack/react-router";
+import { Layers, Route as RouteIcon, PenTool, Component, Palette, Monitor } from "lucide-react";
+import { owner, pageHead } from "@/data/projects";
+import { PageIntro, ContactCTA } from "@/components/portfolio/shared";
+export const Route = createFileRoute("/services")({
+  component: Services,
+  head: () =>
+    pageHead(
+      `Services — ${owner.name}`,
+      "Product design, UX, UI, design systems, branding and website design support.",
+      "/services",
+    ),
+});
+const services = [
+  {
+    title: "Product Design",
+    description: "Turning product ideas into clear, usable experiences.",
+    items: [
+      "Product discovery & direction",
+      "End-to-end user journeys",
+      "Interactive product prototypes",
+    ],
+    icon: Layers,
+  },
+  {
+    title: "UX Design",
+    description: "Understanding people and giving complexity a clear structure.",
+    items: [
+      "Research planning",
+      "User flows & information architecture",
+      "Wireframes & usability exploration",
+    ],
+    icon: RouteIcon,
+  },
+  {
+    title: "UI Design",
+    description: "High-quality interfaces with thoughtful visual hierarchy.",
+    items: ["Mobile & web interfaces", "Responsive layouts", "Interaction states & handoff"],
+    icon: PenTool,
+  },
+  {
+    title: "Design Systems",
+    description: "Reusable components, patterns and visual consistency.",
+    items: ["Visual foundations & tokens", "Component libraries", "Guidelines & documentation"],
+    icon: Component,
+  },
+  {
+    title: "Branding & Visual Design",
+    description: "An identity with a point of view, built to work across touchpoints.",
+    items: [
+      "Identity & visual direction",
+      "Typography & color systems",
+      "Digital graphics & campaign applications",
+    ],
+    icon: Palette,
+  },
+  {
+    title: "Website Design",
+    description: "Modern responsive websites for products, businesses and personal brands.",
+    items: ["Content structure", "High-fidelity web design", "Responsive prototypes"],
+    icon: Monitor,
+  },
+];
+function Services() {
+  return (
+    <main className="page-enter">
+      <PageIntro
+        eyebrow="WHAT WE CAN CREATE TOGETHER"
+        title="Design support from idea to interface."
+      >
+        Whether you're shaping a new product or refining an existing experience, I bring clear
+        thinking and considered design to the work.
+      </PageIntro>
+      <section className="container pb-12">
+        {services.map(({ title, description, items, icon: Icon }) => (
+          <article className="service-row" key={title}>
+            <Icon className="text-primary" size={27} strokeWidth={1.5} />
+            <div>
+              <h2>{title}</h2>
+              <p>{description}</p>
+            </div>
+            <ul>
+              {items.map((i) => (
+                <li key={i}>{i}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </section>
+      <ContactCTA />
+    </main>
+  );
+}

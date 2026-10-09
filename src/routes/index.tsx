@@ -1,8 +1,95 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowUpRight, ArrowDown } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { pageHead, projects, owner, type Project } from '@/data/projects'
-import { DesignerWorkspace } from '@/components/portfolio/visuals'
-import { SectionHeading, ProjectGrid, CaseStudySection, ContactCTA } from '@/components/portfolio/shared'
-export const Route = createFileRoute('/')({ component: Index, head:()=>pageHead(`${owner.name} — Product Designer`, 'Product designer creating thoughtful digital products, interfaces and visual experiences.', '/') })
-function Index(){return <main className="page-enter"><section className="hero container"><div className="hero-top"><span className="eyebrow">PRODUCT DESIGNER</span><span className="status glass"><span className="status-dot"/>Available for selected projects</span></div><h1>I design digital experiences<br className="hidden sm:block"/> people <span>actually enjoy</span> using<span className="text-primary">.</span></h1><div className="hero-bottom"><div><p className="hero-description">Product designer focused on turning ideas, problems and opportunities into clear, useful and thoughtful digital experiences.</p><div className="hero-actions"><Button asChild variant="portfolio" size="lg"><Link to="/work">View my work<ArrowUpRight/></Link></Button><Button asChild variant="glass" size="lg"><Link to="/contact">Let's talk<ArrowUpRight/></Link></Button></div></div><DesignerWorkspace/></div><div className="hero-foot"><span>BASED IN NIGERIA · DESIGNING EVERYWHERE</span><span className="flex items-center gap-2">A little scroll, a lot to explore <ArrowDown size={13}/></span></div></section><section className="intro section container"><div><span className="eyebrow text-muted-foreground">MORE THAN GOOD-LOOKING PIXELS</span><h2>Designing beyond the screen.</h2></div><p>Good product design starts with understanding people. I connect user needs, clear structures and thoughtful visual systems—testing ideas and turning complex problems into products that feel simple to use.</p></section><section className="section container"><SectionHeading eyebrow="A SELECTION OF RECENT EXPLORATIONS" title="Selected work" description="A few projects where strategy, UX and visual design come together." link="work"/><ProjectGrid items={[projects[0],projects[3],projects[1],projects[2]].filter((p):p is Project=>Boolean(p))}/></section><CaseStudySection/><ContactCTA/></main>}
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight, ArrowDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { pageHead, projects, owner, type Project } from "@/data/projects";
+import { DesignerWorkspace } from "@/components/portfolio/visuals";
+import {
+  SectionHeading,
+  ProjectGrid,
+  CaseStudySection,
+  ContactCTA,
+} from "@/components/portfolio/shared";
+export const Route = createFileRoute("/")({
+  component: Index,
+  head: () =>
+    pageHead(
+      `${owner.name} — Product Designer`,
+      "Product designer creating thoughtful digital products, interfaces and visual experiences.",
+      "/",
+    ),
+});
+function Index() {
+  return (
+    <main className="page-enter">
+      <section className="hero container">
+        <div className="hero-top">
+          <span className="eyebrow">PRODUCT DESIGNER</span>
+          <span className="status glass">
+            <span className="status-dot" />
+            Available for selected projects
+          </span>
+        </div>
+        <h1>
+          I design digital experiences
+          <br className="hidden sm:block" /> people <span>actually enjoy</span> using
+          <span className="text-primary">.</span>
+        </h1>
+        <div className="hero-bottom">
+          <div>
+            <p className="hero-description">
+              Product designer focused on turning ideas, problems and opportunities into clear,
+              useful and thoughtful digital experiences.
+            </p>
+            <div className="hero-actions">
+              <Button asChild variant="portfolio" size="lg">
+                <Link to="/work">
+                  View my work
+                  <ArrowUpRight />
+                </Link>
+              </Button>
+              <Button asChild variant="glass" size="lg">
+                <Link to="/contact">
+                  Let's talk
+                  <ArrowUpRight />
+                </Link>
+              </Button>
+            </div>
+          </div>
+          <DesignerWorkspace />
+        </div>
+        <div className="hero-foot">
+          <span>BASED IN NIGERIA · DESIGNING EVERYWHERE</span>
+          <span className="flex items-center gap-2">
+            A little scroll, a lot to explore <ArrowDown size={13} />
+          </span>
+        </div>
+      </section>
+      <section className="intro section container">
+        <div>
+          <span className="eyebrow text-muted-foreground">MORE THAN GOOD-LOOKING PIXELS</span>
+          <h2>Designing beyond the screen.</h2>
+        </div>
+        <p>
+          Good product design starts with understanding people. I connect user needs, clear
+          structures and thoughtful visual systems—testing ideas and turning complex problems into
+          products that feel simple to use.
+        </p>
+      </section>
+      <section className="section container">
+        <SectionHeading
+          eyebrow="A SELECTION OF RECENT EXPLORATIONS"
+          title="Selected work"
+          description="A few projects where strategy, UX and visual design come together."
+          link="work"
+        />
+        <ProjectGrid
+          items={[projects[0], projects[3], projects[1], projects[2]].filter((p): p is Project =>
+            Boolean(p),
+          )}
+        />
+      </section>
+      <CaseStudySection />
+      <ContactCTA />
+    </main>
+  );
+}
