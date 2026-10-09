@@ -955,10 +955,11 @@ textarea.form-field {
     font-size: 58px;
   }
   .hero-bottom {
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: minmax(0, 1fr) 310px;
   }
+  .hero-actions > a { padding-left: 20px; padding-right: 20px; }
   .desk-frame {
-    right: 0;
+    right: 18px;
     width: 240px;
   }
   .workspace {
@@ -971,7 +972,7 @@ textarea.form-field {
     display: none;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .container {
     padding-left: 22px;
     padding-right: 22px;
