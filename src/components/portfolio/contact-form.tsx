@@ -1,5 +1,134 @@
-import { useState } from 'react'
-import { ArrowUpRight, CheckCircle, Copy } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { owner } from '@/data/projects'
-export function ContactForm(){const [draft,setDraft]=useState<{name:string;email:string;type:string;message:string}|null>(null);const [copied,setCopied]=useState(false);if(draft){const body=`Name: ${draft.name}\nEmail: ${draft.email}\nProject type: ${draft.type}\n\n${draft.message}`;return <div className="form-panel glass" role="status"><CheckCircle className="text-success mb-6" size={32}/><h2 className="text-3xl mb-4">Your message is ready.</h2><p className="text-muted-foreground leading-7 mb-6">Nothing has been sent yet. Open your email app to send your message directly, or copy it and email me.</p><Button asChild variant="portfolio" size="lg"><a href={`mailto:${owner.email}?subject=${encodeURIComponent(`${draft.type} enquiry from ${draft.name}`)}&body=${encodeURIComponent(body)}`}>Open email app<ArrowUpRight/></a></Button><div className="flex gap-3 mt-4"><Button variant="glass" onClick={async()=>{try{await navigator.clipboard.writeText(body);setCopied(true)}catch{setCopied(false)}}}><Copy/>{copied?'Copied':'Copy message'}</Button><Button variant="ghost" onClick={()=>setDraft(null)}>Write another</Button></div></div>};return <form className="form-panel glass" onSubmit={e=>{e.preventDefault();const data=new FormData(e.currentTarget);setDraft({name:String(data.get('name')).trim(),email:String(data.get('email')).trim(),type:String(data.get('type')),message:String(data.get('message')).trim()})}}><div className="grid sm:grid-cols-2 gap-x-5"><div><label className="form-label" htmlFor="name">Name</label><input id="name" name="name" className="form-field" placeholder="Your name" autoComplete="name" required pattern=".*\S.*" maxLength={120}/></div><div><label className="form-label" htmlFor="email">Email</label><input id="email" name="email" className="form-field" placeholder="you@example.com" type="email" autoComplete="email" required maxLength={254}/></div></div><label className="form-label" htmlFor="type">Project type</label><select id="type" name="type" className="form-field" required defaultValue=""><option value="" disabled>Select a project type</option>Product Design</option><option>UX/UI Design</option><option>Design Systems</option><option>Branding & Visual Design</option><option>Website Design</option><option>Something else</option></select><label className="form-label" htmlFor="message">Message</label><textarea id="message" name="message" className="form-field" placeholder="A little about your idea, goals and what you have in mind…" required minLength={10} maxLength={5000}/><Button variant="portfolio" type="submit" size="lg">Send message<ArrowUpRight/></Button><p className="text-xs text-muted-foreground mt-4 leading-6">Your message will be prepared for your email app. It won't be sent automatically.</p></form>}
+import { useState } from "react";
+import { ArrowUpRight, CheckCircle, Copy } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { owner } from "@/data/projects";
+export function ContactForm() {
+  const [draft, setDraft] = useState<{
+    name: string;
+    email: string;
+    type: string;
+    message: string;
+  } | null>(null);
+  const [copied, setCopied] = useState(false);
+  if (draft) {
+    const body = `Name: ${draft.name}\nEmail: ${draft.email}\nProject type: ${draft.type}\n\n${draft.message}`;
+    return (
+      <div className="form-panel glass" role="status">
+        <CheckCircle className="text-success mb-6" size={32} />
+        <h2 className="text-3xl mb-4">Your message is ready.</h2>
+        <p className="text-muted-foreground leading-7 mb-6">
+          Nothing has been sent yet. Open your email app to send your message directly, or copy it
+          and email me.
+        </p>
+        <Button asChild variant="portfolio" size="lg">
+          <a
+            href={`mailto:${owner.email}?subject=${encodeURIComponent(`${draft.type} enquiry from ${draft.name}`)}&body=${encodeURIComponent(body)}`}
+          >
+            Open email app
+            <ArrowUpRight />
+          </a>
+        </Button>
+        <div className="flex gap-3 mt-4">
+          <Button
+            variant="glass"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(body);
+                setCopied(true);
+              } catch {
+                setCopied(false);
+              }
+            }}
+          >
+            <Copy />
+            {copied ? "Copied" : "Copy message"}
+          </Button>
+          <Button variant="ghost" onClick={() => setDraft(null)}>
+            Write another
+          </Button>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <form
+      className="form-panel glass"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        setDraft({
+          name: String(data.get("name")).trim(),
+          email: String(data.get("email")).trim(),
+          type: String(data.get("type")),
+          message: String(data.get("message")).trim(),
+        });
+      }}
+    >
+      <div className="grid sm:grid-cols-2 gap-x-5">
+        <div>
+          <label className="form-label" htmlFor="name">
+            Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            className="form-field"
+            placeholder="Your name"
+            autoComplete="name"
+            required
+            pattern=".*\S.*"
+            maxLength={120}
+          />
+        </div>
+        <div>
+          <label className="form-label" htmlFor="email">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            className="form-field"
+            placeholder="you@example.com"
+            type="email"
+            autoComplete="email"
+            required
+            maxLength={254}
+          />
+        </div>
+      </div>
+      <label className="form-label" htmlFor="type">
+        Project type
+      </label>
+      <select id="type" name="type" className="form-field" required defaultValue="">
+        <option value="" disabled>
+          Select a project type
+        </option>
+        <option>Product Design</option>
+        <option>UX/UI Design</option>
+        <option>Design Systems</option>
+        <option>Branding & Visual Design</option>
+        <option>Website Design</option>
+        <option>Something else</option>
+      </select>
+      <label className="form-label" htmlFor="message">
+        Message
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        className="form-field"
+        placeholder="A little about your idea, goals and what you have in mind…"
+        required
+        minLength={10}
+        maxLength={5000}
+      />
+      <Button variant="portfolio" type="submit" size="lg">
+        Send message
+        <ArrowUpRight />
+      </Button>
+      <p className="text-xs text-muted-foreground mt-4 leading-6">
+        Your message will be prepared for your email app. It won't be sent automatically.
+      </p>
+    </form>
+  );
+}
