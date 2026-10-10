@@ -1,5 +1,5 @@
 # Targeted portfolio refinements
-- [ ] Shared A monogram in header/footer and matching favicon
-- [ ] High-fidelity visuals for Adel, Moth, Pica and Flo only
-- [ ] Opaque white mobile menu
-- [ ] Verify unchanged projects, routes, controls, images and mobile widths
+- [x] Shared A monogram in header/footer and matching favicon
+- [x] High-fidelity visuals for Adel, Moth, Pica and Flo only
+- [x] Opaque white mobile menu
+- [x] Verify unchanged projects, routes, controls, images and mobile widths
