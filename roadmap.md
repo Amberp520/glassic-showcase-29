@@ -1,5 +1,5 @@
-# Portfolio roadmap
-- [ ] Design system, shared navigation/footer and home
-- [ ] Six shared project stories, work filters and case-study index
-- [ ] About, services, contact and custom 404
-- [ ] Route, contact, filter and responsive verification
+# Targeted portfolio refinements
+- [x] Shared A monogram in header/footer and matching favicon
+- [x] High-fidelity visuals for Adel, Moth, Pica and Flo only
+- [x] Opaque white mobile menu
+- [x] Verify unchanged projects, routes, controls, images and mobile widths
