@@ -4,6 +4,7 @@ import { ArrowUpRight, ArrowDown, Menu, X, Figma, Mail, ArrowRight } from "lucid
 import { Button } from "@/components/ui/button";
 import { projects, owner, processSteps, type Project } from "@/data/projects";
 import { ProjectVisual, ProcessArtifact } from "./visuals";
+import { DesignerLogo } from "./designer-logo";
 const navigation = [
   { to: "/" as const, label: "Home" },
   { to: "/work" as const, label: "Work" },
@@ -18,8 +19,8 @@ export function Navbar() {
   return (
     <header className="site-header">
       <div className="container nav-inner">
-        <Link to="/" className="brand min-w-0" onClick={() => setOpen(false)}>
-          amberdesigns<span className="brand-dot">.</span>
+        <Link to="/" className="brand min-w-0" aria-label="amberdesigns home" onClick={() => setOpen(false)}>
+          <DesignerLogo />
         </Link>
         <nav aria-label="Main navigation" className="desktop-nav flex gap-7">
           {navigation.map((item) => (
@@ -67,8 +68,8 @@ export function Footer() {
     <footer className="footer container">
       <div className="footer-top">
         <div>
-          <Link to="/" className="brand">
-            amberdesigns<span className="brand-dot">.</span>
+          <Link to="/" className="brand" aria-label="amberdesigns home">
+            <DesignerLogo />
           </Link>
           <p>Product Designer creating thoughtful digital experiences.</p>
           <a href={`mailto:${owner.email}`} className="text-link mt-2">

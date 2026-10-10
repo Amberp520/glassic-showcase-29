@@ -14,3 +14,5 @@
 - Use a Work layout with an index and a dynamic slug leaf; this preserves direct project URLs and shared content.
 - The contact form prepares an email draft client-side until a delivery service is configured; never report a message as sent without delivery confirmation.
 - Treat self-initiated case-study content as concept rationale, not verified research or results; this prevents unsupported portfolio claims.
+- Use a single reusable inline vector logo in header and footer, with matching favicon geometry; this preserves theme-aware color and crisp small-size rendering.
+- Keep high-fidelity project-specific screen renderers scoped by slug in the visual layer; this upgrades targeted concepts without changing stories, routes or unrelated previews.

@@ -15,6 +15,7 @@ import {
   Figma,
 } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { FinishedPhone, FinishedProjectVisual, hasFinishedVisual } from "./finished-visuals";
 export function DesignerWorkspace() {
   return (
     <div
@@ -64,6 +65,7 @@ export function DesignerWorkspace() {
   );
 }
 export function PhoneScreen({ project, step = 0 }: { project: Project; step?: number }) {
+  if (hasFinishedVisual(project.slug)) return <FinishedPhone project={project} step={step} />;
   const Icon =
     project.slug === "adel"
       ? Fuel
@@ -121,6 +123,7 @@ export function ProjectVisual({
   priority?: boolean;
   forceUI?: boolean;
 }) {
+  if (hasFinishedVisual(project.slug)) return <FinishedProjectVisual project={project} />;
   if (project.heroImage && !forceUI)
     return (
       <img
